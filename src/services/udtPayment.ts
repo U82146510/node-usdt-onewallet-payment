@@ -12,3 +12,9 @@ const tronWeb = new TronWeb({
 });
 
 const USDT_CONTRACT = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+
+export async function getUSDTBalance(address:string){
+    const contract = await tronWeb.contract().at(USDT_CONTRACT);
+    const balance = await contract.balanceOf(address).call();
+    return new Decimal(balance.toString()).div(1e6).toNumber();
+};
